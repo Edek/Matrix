@@ -1,22 +1,24 @@
 /*
- *  25/06/2014
- *  18/06/2015
+ * Matrix functions
+ * Thiago Luís Baldissarelli
+ *
+ *  25/06/2014 - Initial code
+ *  18/06/2015 - Code revision
  *  11/09/2015 - Determinant bug fix
  *  16/09/2015 - File split
  *	17/09/2015 - Better determinant algorithm (fixed zero errors)
  *  23/09/2015 - Fixed allocation errors, gaussian upper/down functions
  *
- *
- *  Funções implementadas até o momento:
- *	  Gaussian Upper NO
- *    Gaussian Lower OK
- *	  Multiplicação entre duas matrizes			TESTADO
- *	  Soma e subtração entre duas matrizes		TESTADO
- * 	  Geração de matriz identidade				TESTADO
- *	  Transposição de matrizes					TESTADO
- *	  Determinante matricial					TESTADO
- *	  Matriz Inversa							TESTED
- *	  Multiplicação de matriz por um número 	TESTADO
+ *  Implemented functions:
+ *	  Gaussian Upper                NOT 100%
+ *    Gaussian Lower                TESTED
+ *	  Matrix multiplication         TESTED
+ *	  Add and subtract matrices     TESTED
+ * 	  Identity matrix               TESTED
+ *	  Transpose                     TESTED
+ *	  Determinant                   TESTED
+ *	  Inverse matrix                TESTED
+ *	  Scalar multiplication         TESTED
  *
  */
 
@@ -27,12 +29,11 @@
 typedef enum{false, true} bool; /* Define bool type */
 
 /*
- *  Parte básica do programa
- *  Aqui está a parte onde as matrizes são geradas, além de
- *  Verificar os dados de acordo com as limitações matemáticas.
+ * Basic part of program
+ * Allocate, reallocate and verify matrices.
  */
 double **seed(int rows, int columns){
-	/* Create an seed matrix */
+	/* Create an seed matrix (allocate) */
 	int i, j;
 	double (**matrix) = (double **)malloc(sizeof(double *)*rows); /* Allocate rows */
 	
@@ -46,9 +47,6 @@ double **reallocMatrix(double **original, int rows, int columns){
 	int i, j;
 	double (**newMatrix) = seed(rows, columns);
 
-	printf("Original Allocation: %p\n", original);
-	printf("New Allocation: %p\n", newMatrix);
-
 	for(i = 0; i < rows; i++)
 		for(j = 0; j < columns; j++)
 			newMatrix[i][j] = original[i][j];
@@ -59,7 +57,7 @@ bool verify(int type, int matrix1_rows, int matrix1_columns, int matrix2_rows, i
 	/* Verify matrix limitations */
 	bool isValid = false;
 	
-	if(matrix1_rows > 0 && matrix1_columns > 0){
+	if(matrix1_rows > 0 && matrix1_columns > 0)
 		if((type == 0 && (matrix1_rows == matrix1_columns)) || (type == 1 && (matrix1_columns == matrix2_rows)) || (type == 2))
 			/*
 			 * Type 0
@@ -70,7 +68,7 @@ bool verify(int type, int matrix1_rows, int matrix1_columns, int matrix2_rows, i
 			 * Type 1
 			 * Matrix1 columns are equal to Matrix2 rows.
 			 * Works with two matrices.
-			 * Used for matricial multiply.
+			 * Used for multiply matrices.
 			 *
 			 * Type 2
 			 * Without line/column restrictions.
@@ -78,14 +76,12 @@ bool verify(int type, int matrix1_rows, int matrix1_columns, int matrix2_rows, i
 			 * Used to create identity matrix and scalar multiplication.
 			 */
 			isValid = true;
-	}
 	return(isValid);
 }
 
 /*
- *  Funções do programa
- *  Aqui está a parte pesada do programa, onde os calculos são executados
- *  Chama as funções anteriores para criar matriz
+ * Mathematical operations
+ * 
  */
 double **gaussian_lower(int matrix_size, double **matrix, int *permutations){
 	/* Gaussian lower elimination */
