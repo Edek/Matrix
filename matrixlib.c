@@ -1,6 +1,6 @@
 /*
  * Matrix functions
- * Thiago Luís Baldissarelli
+ * Thiago Luis Baldissarelli
  *
  *  25/06/2014 - Initial code
  *  18/06/2015 - Code revision
@@ -24,7 +24,7 @@
 
 #include <stdio.h> /* stdInputOutput */
 #include <stdlib.h> /* Memory Allocation */
-#include "calc.h"
+#include "matrixlib.h"
 
 typedef enum{false, true} bool; /* Define bool type */
 
@@ -42,7 +42,7 @@ double **seed(int rows, int columns){
 	return(matrix);
 }
 
-double **reallocMatrix(double **original, int rows, int columns){
+double **reallocMatrix(double (**original), int rows, int columns){
 	/* Reallocate matrix in memory */
 	int i, j;
 	double (**newMatrix) = seed(rows, columns);
@@ -83,7 +83,7 @@ bool verify(int type, int matrix1_rows, int matrix1_columns, int matrix2_rows, i
  * Mathematical operations
  * 
  */
-double **gaussian_lower(int matrix_size, double **matrix, int *permutations){
+double **gaussian_lower(int matrix_size, double (**matrix), int (*permutations)){
 	/* Gaussian lower elimination */
 	/* NOT FINISHED */
 	int i, j, k;
@@ -102,7 +102,7 @@ double **gaussian_lower(int matrix_size, double **matrix, int *permutations){
 }
 
 /* Gaussian upper elimination */
-double **gaussian_upper(double **matrix, int matrix_size, int *permutations){
+double **gaussian_upper(double (**matrix), int matrix_size, int (*permutations)){
 	/*
 	 * - Calculate determinant via Gaussian upper elimination (Calculate an
 	 * Triangular equivalent matrix, then multiply the diagonal principal)
@@ -141,7 +141,7 @@ double **gaussian_upper(double **matrix, int matrix_size, int *permutations){
 	return(newMatrix);
 }
 
-double determinant(double **matrix, int size){
+double determinant(double (**matrix), int size){
 	/*
 	 * - Calculate determinant via Gaussian upper elimination (Calculate an
 	 * Triangular equivalent matrix, then multiply the diagonal principal)
@@ -190,7 +190,7 @@ double **identity_matrix(int size){
 	return(newMatrix);
 }
 
-double **transpose(double **matrix, int rows, int columns){
+double **transpose(double (**matrix), int rows, int columns){
 	/*
 	 * Transpose an matrix
 	 * Example:
@@ -208,7 +208,7 @@ double **transpose(double **matrix, int rows, int columns){
 	return(newMatrix);
 }
 
-double **scalar_multiplication(double **matrix, int rows, int columns, long number){ 
+double **scalar_multiplication(double (**matrix), int rows, int columns, long number){ 
 	/*
 	 * Multiplicate a matrix by an scalar number.
 	 *     [[1, 2, 3],    [[02, 04, 06],
@@ -225,7 +225,7 @@ double **scalar_multiplication(double **matrix, int rows, int columns, long numb
 	return(newMatrix);
 }
 
-double **sum_matrices(double **matrix1, double **matrix2, int rows, int columns, int type){
+double **sum_matrices(double (**matrix1), double (**matrix2), int rows, int columns, int type){
 	/* 
 	 * Sum two matrices.
 	 * Example:
@@ -248,7 +248,7 @@ double **sum_matrices(double **matrix1, double **matrix2, int rows, int columns,
 	return(result);
 }
 
-double **matricial_multiplication(double **matrix1, double **matrix2, int matrix1_rows, int matrix1_columns, int matrix2_rows, int matrix2_columns){
+double **matricial_multiplication(double (**matrix1), double (**matrix2), int matrix1_rows, int matrix1_columns, int matrix2_rows, int matrix2_columns){
 	/* 
 	 * Usual method used in matricial multiplications
 	 * Example
@@ -267,7 +267,7 @@ double **matricial_multiplication(double **matrix1, double **matrix2, int matrix
 	return(result);
 }
 
-double **inverse_matrix(double **matrix, int matrix_size){
+double **inverse_matrix(double (**matrix), int matrix_size){
 	/* 
 	 * - Calculate an inverse matrix via Gaussian-Jordan upper elimination and Gaussian-Jordan 
 	 *   lower elimination.

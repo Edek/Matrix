@@ -1,5 +1,5 @@
-#ifndef CALC_H_INCLUDED
-#define CALC_H_INCLUDED
+#ifndef MATRIXLIB_H_INCLUDED
+#define MATRIXLIB_H_INCLUDED
 double determinant(double **matrix, int size);
 double **seed(int rows, int columns);
 double **identity_matrix(int size);
