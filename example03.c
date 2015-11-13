@@ -14,18 +14,6 @@
 #include <stdlib.h> /* Memory Allocation */
 #include "matrixlib.h" /* Matrix calculation lib */
 
-
-void print_matrix(int rows, int columns, double (**matrix)){
-	/* Print matrix on program interface */
-	int i, j;
-
-	for(i = 0; i < rows; i++){
-		for(j = 0; j < columns; j++)
-			printf("%lf ", matrix[i][j]);
-		printf("\n");
-	}
-}
-
 double fibonacci(int n){
 	int i;
 	double (**matrix) = seed(2, 2);
