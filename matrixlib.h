@@ -1,6 +1,7 @@
 #ifndef MATRIXLIB_H_INCLUDED
 #define MATRIXLIB_H_INCLUDED
 double determinant(double **matrix, int size);
+double **reallocMatrix(double (**original), int rows, int columns);
 double **seed(int rows, int columns);
 double **identity_matrix(int size);
 double **transpose(double **matrix, int rows, int columns);

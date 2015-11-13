@@ -71,5 +71,4 @@ int main(){
 	}else{
 		printf("This system do not have an solution.");
 	}
-	getch();
 }

@@ -257,7 +257,7 @@ int main() {
 	while(run == true){
 		printf("Option: ");
 		scanf("%d", &option);
-		if(option == 10){ 
+		if(option == 10)
 			run = false; 
 		else 
 			options(option);
